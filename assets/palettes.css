@@ -1,0 +1,71 @@
+/*!
+ * Pixel HUD palettes. Pick one with data-hud-palette on <html> (or on the
+ * element that has data-skin="pixel"). Each sets the --hud-* tokens that
+ * pixel-hud.css reads; anything a palette leaves out falls back to the
+ * defaults there. Check a new palette with scripts/check-contrast.mjs.
+ */
+
+/* Starward: deep-space panels, sky title bars and rules. */
+[data-hud-palette="starward"] {
+  color-scheme: dark;
+  --hud-bg: #050a17;
+  --hud-panel: #0a1530;
+  --hud-hover: #12244a;
+  --hud-selected: #1a3363;
+  --hud-border: #4f86c6;
+  --hud-text: #dbe9fb;
+  --hud-text-muted: #aac6e6;
+  --hud-text-dim: #8fb0d6;
+  --hud-accent: #8fd3ff;
+  --hud-accent-contrast: #04102a;
+  --hud-bar: #a6d6f7;
+  --hud-bar-text: #04102a;
+  --hud-green: #5fd472;
+  --hud-yellow: #ffd23f;
+  --hud-orange: #ff9a2e;
+  --hud-scanline: rgba(0, 0, 0, 0.16);
+}
+
+/* Terminal: grey-green panels with a pale mint bar, like an old console. */
+[data-hud-palette="terminal"] {
+  color-scheme: dark;
+  --hud-bg: #19201f;
+  --hud-panel: #212b28;
+  --hud-hover: #2b3632;
+  --hud-selected: #35433c;
+  --hud-border: #62806c;
+  --hud-text: #e6ede8;
+  --hud-text-muted: #c3d0c6;
+  --hud-text-dim: #afc2b5;
+  --hud-accent: #acccb7;
+  --hud-accent-contrast: #182b20;
+  --hud-bar: #acccb7;
+  --hud-bar-text: #182b20;
+  --hud-green: #5cd98a;
+  --hud-yellow: #facc15;
+  --hud-orange: #ff9a2e;
+  --hud-scanline: rgba(0, 0, 0, 0.16);
+}
+
+/* Paper: warm sand with brown bars, for a light page. */
+[data-hud-palette="paper"] {
+  color-scheme: light;
+  --hud-bg: #faf6ee;
+  --hud-panel: #f1ebdf;
+  --hud-hover: #ebe3d4;
+  --hud-selected: #e4dac8;
+  --hud-border: #958160;
+  --hud-text: #2e2a22;
+  --hud-text-muted: #5c5243;
+  --hud-text-dim: #665b4b;
+  --hud-accent: #7a4f10;
+  --hud-accent-contrast: #ffffff;
+  --hud-bar: #7a4f10;
+  --hud-bar-text: #ffffff;
+  --hud-green: #116329;
+  --hud-green-contrast: #ffffff;
+  --hud-yellow: #7d4e00;
+  --hud-orange: #b4540a;
+  --hud-red: #b42318;
+  --hud-scanline: rgba(0, 0, 0, 0.05);
+}

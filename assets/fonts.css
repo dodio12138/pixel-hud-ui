@@ -1,0 +1,11 @@
+/*!
+ * Fusion Pixel 12px (TakWolf, OFL-1.1): a pixel face with full CJK coverage.
+ * Loaded from jsDelivr through Fontsource, pinned to an exact version. Each
+ * file is about 600 KB (woff2) and downloads only once text uses the family.
+ *
+ * Self-hosting instead (offline, strict CSP): `npm i @fontsource/fusion-pixel-12px-proportional-sc@5.3.0
+ * @fontsource/fusion-pixel-12px-monospaced-sc@5.3.0` and import their 400.css from your bundle,
+ * then drop this file.
+ */
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/fusion-pixel-12px-proportional-sc@5.3.0/400.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/fusion-pixel-12px-monospaced-sc@5.3.0/400.css");

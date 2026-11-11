@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-CN" data-skin="pixel" data-hud-palette="starward">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel HUD UI</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="palettes.css">
+<link rel="stylesheet" href="pixel-hud.css">
+<style>
+  /* Demo layout only: not part of the framework. */
+  body { margin: 0; padding: 16px; }
+  .demo-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .demo-head h1 { margin: 0 auto 0 0; font-size: var(--hud-text-lg); font-weight: 400; color: var(--hud-accent); letter-spacing: 0.04em; }
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; align-items: start; }
+  .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .demo-row:last-child { margin-bottom: 0; }
+  .demo-cap { width: 100%; font-size: var(--hud-text-xs); color: var(--hud-text-dim); }
+  .demo-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .demo-swatch { height: 34px; border: 1px solid var(--hud-border); display: flex; align-items: flex-end; padding: 2px 4px; font-size: 12px; }
+  .demo-stack { display: flex; flex-direction: column; gap: 16px; }
+  .demo-wide { grid-column: 1 / -1; }
+  .hud-tooltip-host { position: relative; display: inline-block; }
+</style>
+</head>
+<body>
+<header class="demo-head">
+  <h1>PIXEL HUD UI</h1>
+  <span class="hud-label">配色</span>
+  <div class="hud-segmented is-sm" id="palette">
+    <button aria-pressed="true" data-palette="starward">星海</button>
+    <button aria-pressed="false" data-palette="terminal">终端</button>
+    <button aria-pressed="false" data-palette="paper">纸张</button>
+  </div>
+  <span class="hud-label">扫描线</span>
+  <button class="hud-switch" role="switch" aria-checked="true" id="scan" aria-label="扫描线"><span class="hud-switch__knob"></span></button>
+</header>
+
+<main class="demo-grid">
+
+  <!-- Foundations -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>基础 · 颜色</h2></div>
+    <div class="hud-panel__body">
+      <div class="demo-swatches">
+        <div class="demo-swatch" style="background:var(--hud-bg)">bg</div>
+        <div class="demo-swatch" style="background:var(--hud-panel)">panel</div>
+        <div class="demo-swatch" style="background:var(--hud-hover)">hover</div>
+        <div class="demo-swatch" style="background:var(--hud-selected)">selected</div>
+        <div class="demo-swatch" style="background:var(--hud-bar);color:var(--hud-bar-text)">bar</div>
+        <div class="demo-swatch" style="background:var(--hud-accent);color:var(--hud-accent-contrast)">accent</div>
+        <div class="demo-swatch" style="background:var(--hud-green);color:var(--hud-green-contrast)">green</div>
+        <div class="demo-swatch" style="background:var(--hud-yellow);color:#1f1600">yellow</div>
+        <div class="demo-swatch" style="background:var(--hud-orange);color:#1f1000">orange</div>
+        <div class="demo-swatch" style="background:var(--hud-red);color:#fff">red</div>
+        <div class="demo-swatch" style="background:var(--hud-info);color:#fff">info</div>
+        <div class="demo-swatch" style="background:var(--hud-border);color:var(--hud-bg)">border</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>基础 · 字号</h2></div>
+    <div class="hud-panel__body">
+      <div style="font-size:var(--hud-text-xl);line-height:1.1;color:var(--hud-yellow)">79.3 KM</div>
+      <div style="font-size:var(--hud-text-lg);line-height:1.25">页面标题 24</div>
+      <div style="font-size:var(--hud-text-md)">面板标题 16</div>
+      <div>正文与控件文字 14 · The quick brown fox</div>
+      <div style="font-size:var(--hud-text-xs);color:var(--hud-text-muted)">辅助信息 12 · 2026-11-11 04:08</div>
+      <div class="hud-mono" style="color:var(--hud-text-dim)">等宽 0123456789 ↑1.2k ↓340</div>
+    </div>
+  </section>
+
+  <!-- Buttons -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>按键</h2>
+      <div class="hud-titlebar__actions">
+        <button class="hud-icon-btn" aria-label="刷新" title="刷新"><svg class="hud-icon" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg></button>
+        <button class="hud-icon-btn" aria-label="关闭" title="关闭"><svg class="hud-icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <div class="hud-panel__body">
+      <div class="demo-row"><span class="demo-cap">实心键 · 按意图上色</span>
+        <button class="hud-btn is-solid">运行 F5</button>
+        <button class="hud-btn is-solid" data-intent="go">启用</button>
+        <button class="hud-btn is-solid" data-intent="warn">→ 引导</button>
+        <button class="hud-btn is-solid" data-intent="info">↑ 排队</button>
+        <button class="hud-btn is-solid" data-intent="danger">■ 停止</button>
+      </div>
+      <div class="demo-row"><span class="demo-cap">不可用：保持颜色，变淡</span>
+        <button class="hud-btn is-solid" data-intent="warn" disabled>→ 引导</button>
+        <button class="hud-btn is-solid" data-intent="info" disabled>↑ 排队</button>
+        <button class="hud-btn" disabled>取消</button>
+      </div>
+      <div class="demo-row"><span class="demo-cap">线框键 · 尺寸 · 加载</span>
+        <button class="hud-btn is-sm">小</button>
+        <button class="hud-btn">中</button>
+        <button class="hud-btn is-lg">大</button>
+        <button class="hud-btn is-solid" aria-busy="true">保存</button>
+        <button class="hud-btn" aria-busy="true">读取</button>
+      </div>
+      <div class="demo-row"><span class="demo-cap">图标键</span>
+        <button class="hud-icon-btn is-sm" aria-label="添加"><svg class="hud-icon is-sm" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="hud-icon-btn" aria-label="搜索"><svg class="hud-icon" viewBox="0 0 24 24"><path d="M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zM20 20l-4.5-4.5"/></svg></button>
+        <button class="hud-icon-btn is-lg" aria-label="设置"><svg class="hud-icon is-lg" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs, segmented, rows -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>标签页 · 分段 · 列表行</h2></div>
+    <div class="hud-panel__body">
+      <div class="demo-row">
+        <div class="hud-tabs" role="tablist" id="tabs">
+          <button class="hud-tab" role="tab" aria-selected="true">仪表</button>
+          <button class="hud-tab" role="tab" aria-selected="false">轨道</button>
+          <button class="hud-tab" role="tab" aria-selected="false">结构</button>
+          <button class="hud-tab" role="tab" aria-selected="false">电力</button>
+        </div>
+      </div>
+      <div class="demo-row">
+        <span class="hud-label">时间加速</span>
+        <div class="hud-segmented" data-group>
+          <button aria-pressed="true">1x</button><button aria-pressed="false">2x</button><button aria-pressed="false">4x</button><button aria-pressed="false">10x</button>
+        </div>
+      </div>
+      <div class="hud-panel" style="background:var(--hud-bg)">
+        <div class="hud-subhead">任务</div>
+        <div class="hud-row" aria-current="true">入轨 Loxaar <span class="hud-num" style="margin-left:auto">04:08</span>
+          <button class="hud-icon-btn is-sm" aria-label="更多"><svg class="hud-icon is-sm" viewBox="0 0 24 24"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg></button></div>
+        <div class="hud-row">采集样本 <span class="hud-num" style="margin-left:auto;color:var(--hud-text-dim)">13:59</span></div>
+        <div class="hud-row">返航 <span class="hud-badge" style="margin-left:auto">3</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forms -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>表单</h2></div>
+    <div class="hud-panel__body demo-stack">
+      <div class="hud-field">
+        <label class="hud-label" for="f1">目标远拱点<span class="hud-required">*</span></label>
+        <input id="f1" value="27000" aria-describedby="f1h">
+        <span class="hud-help" id="f1h">单位：米，范围 10000–90000</span>
+      </div>
+      <div class="hud-field">
+        <label class="hud-label" for="f2">转弯起点</label>
+        <input id="f2" value="-50" aria-invalid="true" aria-describedby="f2e">
+        <span class="hud-error" id="f2e">不能小于 0</span>
+      </div>
+      <div class="hud-field">
+        <label class="hud-label" for="f3">星球</label>
+        <span class="hud-select"><select id="f3"><option>Loxaar</option><option>Vessa</option><option>Kirr</option></select></span>
+      </div>
+      <div class="demo-row">
+        <label class="hud-check"><input type="checkbox" checked> 自动分级</label>
+        <label class="hud-check"><input type="checkbox" id="indet"> 部分</label>
+        <label class="hud-check"><input type="checkbox"> 着陆腿</label>
+      </div>
+      <div class="demo-row">
+        <label class="hud-radio"><input type="radio" name="r" checked> 前视</label>
+        <label class="hud-radio"><input type="radio" name="r"> 尾视</label>
+        <label class="hud-radio"><input type="radio" name="r" disabled> 侧视</label>
+      </div>
+      <div class="demo-row">
+        <button class="hud-switch" role="switch" aria-checked="true" aria-label="SAS"><span class="hud-switch__knob"></span></button><span>SAS</span>
+        <button class="hud-switch" role="switch" aria-checked="false" aria-label="RCS"><span class="hud-switch__knob"></span></button><span>RCS</span>
+      </div>
+      <div class="hud-field">
+        <label class="hud-label" for="f4">油门 <span class="hud-num" id="f4v">62%</span></label>
+        <input id="f4" type="range" min="0" max="100" value="62">
+      </div>
+    </div>
+  </section>
+
+  <!-- Indicators -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>指示</h2></div>
+    <div class="hud-panel__body demo-stack">
+      <div><div class="hud-label">燃料 100%</div><div class="hud-gauge" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="--value:1"></div></div>
+      <div><div class="hud-label">单组元 46%</div><div class="hud-gauge" style="--value:.46"></div></div>
+      <div><div class="hud-label">电量 18%</div><div class="hud-gauge" data-state="warn" style="--value:.18"></div></div>
+      <div><div class="hud-label">耐热 6%</div><div class="hud-gauge" data-state="alert" style="--value:.06"></div></div>
+      <div class="demo-row">
+        <span class="hud-lamp" data-state="on">连接</span>
+        <span class="hud-lamp" data-state="off">离线</span>
+        <span class="hud-lamp" data-state="warn">过热</span>
+        <span class="hud-lamp" data-state="alert">失压</span>
+      </div>
+      <div class="demo-row">
+        <span class="hud-tag">TURN_START</span><span class="hud-tag">AP 79.3 km</span>
+        <span class="hud-badge">12</span>
+        <kbd>Ctrl</kbd>+<kbd>F5</kbd>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overlays -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>浮层</h2></div>
+    <div class="hud-panel__body demo-stack">
+      <div class="demo-row" style="align-items:flex-start">
+        <div class="hud-menu" role="menu">
+          <button class="hud-menu__item" role="menuitemcheckbox" aria-checked="true">前视<span class="hud-menu__shortcut">1</span></button>
+          <button class="hud-menu__item" role="menuitemcheckbox" aria-checked="false">尾视<span class="hud-menu__shortcut">2</span></button>
+          <div class="hud-menu__sep" role="separator"></div>
+          <button class="hud-menu__item" role="menuitem">导出日志…<span class="hud-menu__shortcut">⌘E</span></button>
+          <button class="hud-menu__item" role="menuitem" disabled>分级（无燃料）</button>
+          <button class="hud-menu__item is-danger" role="menuitem">抛弃载荷</button>
+        </div>
+        <span class="hud-tooltip">进入环绕轨道：Loxaar +30</span>
+      </div>
+      <div class="hud-toast" role="status" data-state="on">已保存 ascent.sd</div>
+      <div class="hud-toast" role="alert" data-state="alert">连接中断 <button class="hud-btn is-sm">重试</button></div>
+      <button class="hud-btn" id="openDialog">打开对话框</button>
+    </div>
+  </section>
+
+  <!-- Table and code -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>表格 · 代码块</h2></div>
+    <div class="hud-panel__body demo-stack">
+      <table class="hud-table">
+        <thead><tr><th>参数</th><th class="hud-num">当前</th><th class="hud-num">建议</th></tr></thead>
+        <tbody>
+          <tr><td><span class="hud-tag">TURN_START</span></td><td class="hud-num">1000</td><td class="hud-num">1500</td></tr>
+          <tr><td><span class="hud-tag">TURN_SHAPE</span></td><td class="hud-num">0.55</td><td class="hud-num">0.45</td></tr>
+          <tr><td><span class="hud-tag">MAX_TWR</span></td><td class="hud-num">2.2</td><td class="hud-num">1.9</td></tr>
+        </tbody>
+      </table>
+      <div class="hud-code">
+        <div class="hud-code__header"><span>python</span><button class="hud-btn is-sm">复制</button></div>
+<pre><code>def climb_throttle():
+    return min(1, MAX_TWR / ship.twr)</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prose -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>正文排版</h2></div>
+    <div class="hud-panel__body hud-prose">
+      <h2>入轨参数分析</h2>
+      <p>当前脚本在 <strong>1 km</strong> 开始重力转弯，在 <strong>42 km</strong> 结束，对 <a href="#">Loxaar</a> 来说偏早。</p>
+      <blockquote>动压峰值预计从 0.699 降到约 0.52。</blockquote>
+      <ul><li>远拱点目标 <code>TARGET_AP = 27000</code> 保持不变</li><li>分级逻辑 <code>auto_stage()</code> 无需修改</li></ul>
+    </div>
+  </section>
+
+  <!-- Input, loading, empty -->
+  <section class="hud-panel">
+    <div class="hud-titlebar"><h2>输入 · 加载 · 空状态</h2></div>
+    <div class="hud-panel__body demo-stack">
+      <div class="hud-input" style="display:flex;gap:8px;align-items:center;padding:6px 6px 6px 12px">
+        <textarea data-pixel-caret rows="1" placeholder="输入命令（help 查看全部）" style="flex:1;border:0;background:none;resize:none;padding:0;height:24px;box-shadow:none"></textarea>
+        <button class="hud-btn is-solid">→ 发送</button>
+      </div>
+      <div class="demo-row"><span class="hud-loader" role="status" aria-label="加载中"></span><span style="color:var(--hud-text-dim)">正在计算轨道…</span></div>
+      <div class="hud-panel" style="background:var(--hud-bg)">
+        <div class="hud-empty"><span class="hud-empty__text">没有任务</span><button class="hud-btn is-sm">新建任务</button></div>
+      </div>
+      <hr>
+      <div style="color:var(--hud-text-dim);font-size:var(--hud-text-xs)">分隔线：1px 虚线</div>
+    </div>
+  </section>
+</main>
+
+<div class="hud-backdrop" id="dialog" hidden>
+  <div class="hud-dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+    <div class="hud-titlebar"><h2 id="dlgTitle">确认分级</h2></div>
+    <div class="hud-dialog__body">第一级还剩 <span class="hud-tag">3%</span> 燃料。现在分级会丢弃这部分燃料。</div>
+    <div class="hud-dialog__actions">
+      <button class="hud-btn" data-close>取消</button>
+      <button class="hud-btn is-solid" data-intent="danger" data-close>分级</button>
+    </div>
+  </div>
+</div>
+
+<script src="pixel-caret.js"></script>
+<script>
+  // Demo wiring only.
+  const root = document.documentElement;
+  document.querySelectorAll("#palette button").forEach((b) => b.addEventListener("click", () => {
+    root.dataset.hudPalette = b.dataset.palette;
+    document.querySelectorAll("#palette button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+  document.querySelectorAll(".hud-switch").forEach((s) => s.addEventListener("click", () => s.setAttribute("aria-checked", String(s.getAttribute("aria-checked") !== "true"))));
+  document.getElementById("scan").addEventListener("click", (e) => { root.dataset.hudScanlines = e.currentTarget.getAttribute("aria-checked") === "true" ? "on" : "off"; });
+  document.querySelectorAll("#tabs .hud-tab").forEach((t) => t.addEventListener("click", () => document.querySelectorAll("#tabs .hud-tab").forEach((x) => x.setAttribute("aria-selected", String(x === t)))));
+  document.querySelectorAll("[data-group]").forEach((g) => g.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => g.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))))));
+  document.getElementById("indet").indeterminate = true;
+  const f4 = document.getElementById("f4"); f4.addEventListener("input", () => { document.getElementById("f4v").textContent = f4.value + "%"; });
+  const dialog = document.getElementById("dialog");
+  document.getElementById("openDialog").addEventListener("click", () => { dialog.hidden = false; dialog.querySelector("[data-close]").focus(); });
+  dialog.addEventListener("click", (e) => { if (e.target === dialog || e.target.hasAttribute("data-close")) dialog.hidden = true; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") dialog.hidden = true; });
+</script>
+</body>
+</html>
